@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 app.use('/dev', userRoutes)
 
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3002
 
 try {
     app.listen(PORT,() =>{
