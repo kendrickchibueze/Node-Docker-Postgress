@@ -3,7 +3,7 @@ version: '3.8'
 services:
    node_backend:
      container_name: node_docker
-     image: node_docker:0.0.2
+     image: node_docker:0.0.4
      build:
         context: .
      ports:

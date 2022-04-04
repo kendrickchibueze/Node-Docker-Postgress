@@ -1,6 +1,11 @@
 const express = require('express')
-const userRoutes  = require('./routes/dev')
 const app = express()
+
+const devRoutes  = require('./routes/dev');
+const userRoutes = require('./routes/users');
+
+const  sequelize = require("./utils/database");
+const User =  require('./models/users');
 
 
 app.use(express.json())
@@ -15,12 +20,20 @@ app.use((req, res, next) => {
 })
 
 //setting up routes middleware
-app.use('/dev', userRoutes)
+app.use('/dev', devRoutes);
+app.use('/users', userRoutes);
 
 
-const PORT = process.env.PORT || 3002
+//module pattern
+(async () =>{
+ const PORT = process.env.PORT || 3002
+  try {
+      //sequelize creating the table users inside the db without touching any endpoint
+      //this is done before we bootstrap the application
+      await sequelize.sync({
+          force:false
+      })
 
-try {
     app.listen(PORT,() =>{
         console.log(`Server running on port ${PORT}`)
     })
@@ -28,4 +41,9 @@ try {
 } catch (error) {
     console.error(error)
 }
+})()
+
+
+
+
 
